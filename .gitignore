@@ -1,0 +1,4 @@
+data/raw/*
+data/subset/*
+data/processed/*
+data/final/*
