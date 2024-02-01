@@ -1,6 +1,8 @@
 library(tidyverse)
 library(scico)
 library(cowplot)
+library(sf)
+library(rnaturalearth)
 
 
 source("code/utils_visuals.R")
@@ -13,7 +15,7 @@ albedo_A = function(fontsize) {
       geom_point(data = df[df$year == 2015, ], aes(x = month, y = albedo_mean_30years, color = s), 
                  pch = 15, size = 5) +
       geom_vline(xintercept = "dec", color = "grey80",  alpha = .4, linewidth = 6) + 
-      geom_rect(aes(xmin = "jan", xmax = "feb", ymin = -Inf, ymax = Inf), fill = "grey80", color = NA, alpha = .4) + 
+      geom_rect(aes(xmin = 0.75, xmax = 2.25  , ymin = -Inf, ymax = Inf), fill = "grey80", color = NA, alpha = .4) + 
       geom_line(data = df, aes(x = month, y = albedo_mean, color = s, linetype = as.factor(d), group = interaction(s,d, year)), 
                 linewidth = .1, alpha = .9) +
       geom_line(data = df, aes(x = month, y = albedo_mean_30years, color = s, linetype = as.factor(d), group = interaction(s,d)), 
@@ -75,6 +77,7 @@ albedo_C = function(fontsize) {
   
   df$c = factor(df$c, levels = c("SSP5-RCP8.5/0.003", "Control/0.04", "SSP5-RCP8.5/0.04"))
   
+  load_basemap()
   
   (p = ggplot() +
       add_basemap() + 

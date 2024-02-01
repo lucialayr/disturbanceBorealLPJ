@@ -13,7 +13,7 @@ et_A = function(fontsize) {
   (p = ggplot() + 
       geom_point(data = df[df$year == 2015, ], aes(x = month, y = aet_mean_30years, color = s), 
                  pch = 15, size = 5) +
-      geom_rect(aes(xmin = "mar", xmax = "may", ymin = -Inf, ymax = Inf), fill = "grey80", color = NA, alpha = .4) + 
+      geom_rect(aes(xmin = 2.75, xmax = 5.25, ymin = -Inf, ymax = Inf), fill = "grey80", color = NA, alpha = .4) + 
       geom_line(data = df, aes(x = month, y = aet_mean, color = s, linetype = as.factor(d), group = interaction(s,d, year)), 
                 linewidth = .1, alpha = .9) +
       geom_line(data = df, aes(x = month, y = aet_mean_30years, color = s, linetype = as.factor(d), group = interaction(s,d)), 
