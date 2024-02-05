@@ -161,3 +161,61 @@ final_3C(Configurations = data.frame(climate_scenario = c("picontrol",  "ssp585"
          year = 2100,
          season = c("jan", "feb", "dec"),
          ncore = 4)
+
+
+final_3C_configuration_significance = function(climate_scenario, disturbance_regime, year, season) {
+  df_anomaly = read_csv(paste0("data/processed/", create_name_timeslice("picontrol", 0.003, "albedo", year), "_processed.csv"),
+                        show_col_types = FALSE) %>%
+    select(lon, lat, year, month, albedo) %>%
+    filter(month %in% season) %>%
+    group_by(lon, lat, year) %>%
+    summarize(across(albedo, list(mean = ~round(mean(.x, na.rm = TRUE), digits = 4)),
+                     .names = "reference_{.fn}"))
+  
+  
+  df_configuration = read_csv(paste0("data/processed/", create_name_timeslice(climate_scenario, round(as.numeric(disturbance_regime), 3), "albedo", year), "_processed.csv"),
+                              show_col_types = FALSE) %>%
+    select(lon, lat, year, month, albedo) %>%
+    filter(month %in% season) %>%
+    group_by(lon, lat, year) %>%
+    summarize(across(albedo, list(mean = ~round(mean(.x, na.rm = TRUE), digits = 4)),
+                     .names = "{.col}_{.fn}")) %>%
+    full_join(df_anomaly) %>%
+    group_by(lon, lat) %>%
+    mutate(p_value = wilcox.test(albedo_mean, reference_mean, alternative = "two.sided")$p.value) %>%
+    mutate(significant = case_when(p_value < 0.01 ~ "1",
+                                   TRUE ~ "0")) %>%
+    select(lon, lat, p_value, significant) 
+  
+  shp = df_configuration %>%
+    select(lon, lat, significant) %>%
+    terra::rast(crs = "EPSG:4326") %>% # convert to  raster
+    as.polygons(dissolve = F, aggregate = T) %>% # convert to shapefile 
+    st_as_sf() %>%
+    mutate(s = climate_scenario,
+           d = round(as.numeric(disturbance_regime), 3))
+  
+  st_write(shp, paste0("data/final/shp/albedo_significance_", create_name_timeslice(climate_scenario, round(as.numeric(disturbance_regime), 3), "albedo", year), ".shp"), 
+           append = F)
+  
+  rm(df_anomaly)
+  gc()
+  
+  return(df_configuration)
+}
+
+final_3C_significance = function(Configurations, year, season, ncore) {
+  
+  plan(multisession, workers = ncore)
+  
+  results = future_pmap_dfr(Configurations, ~final_3C_configuration_significance(..1, ..2, year, season))
+  
+  results %>%
+    write_csv("data/final/final_albedoC_significance.csv")
+}
+
+final_3C_significance(Configurations = data.frame(climate_scenario = c("picontrol",  "ssp585" ,  "ssp585"),
+                                                  disturbance_regime = c("0.04", "0.003333333", "0.04")),
+                      year = 2100,
+                      season = c("jan", "feb", "dec"),
+                      ncore = 4)

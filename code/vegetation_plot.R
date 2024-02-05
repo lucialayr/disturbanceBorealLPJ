@@ -50,7 +50,9 @@ plot_1B = function(variable, fontsize) {
       scale_x_discrete(name = "Disturbance probability") + 
       add_pft_scale() + 
       add_common_layout(fontsize) +
-      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust= 1)))
+      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust= 1),
+            panel.grid.major.y = element_line(color = "grey80", size = .2),
+            panel.grid.minor.y = element_line(color = "grey80", size = .2)))
   
   return(p)
 }
@@ -91,7 +93,7 @@ return(p)
 plot_1 = function(variable, fontsize) {
   
   p1A = plot_1B(variable, fontsize)
-  p1B = plot_1B("lai", fontsize)
+  p1B = plot_1B("cmass", fontsize)
   p1C = plot_1C(variable, fontsize)
   legend = get_legend(p1B + theme(legend.direction = "horizontal",
                                   legend.text = element_text(size = fontsize),
@@ -108,6 +110,7 @@ plot_1 = function(variable, fontsize) {
                  ncol = 1, rel_heights = c(1.2, 1, .15)))
   
   ggsave(paste0("figures/figure_vegetation_", variable, ".png"), width = 9, height = 7, dpi = 300)
+  ggsave(paste0("figures/figure_vegetation_", variable, ".pdf"), width = 9, height = 7, dpi = 300)
 }
 
 plot_1("fpc", 15)

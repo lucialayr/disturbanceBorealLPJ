@@ -90,6 +90,12 @@ final_1B(Climate_Scenarios = c("ssp370" , "ssp585" , "ssp126" , "picontrol"),
          year = 2100,
          ncore = 4)
 
+final_1B(Climate_Scenarios = c("ssp370" , "ssp585" , "ssp126" , "picontrol"),
+         Disturbance_Regimes = c("0.04", "0.003333333", "0.1", "0.01"),
+         variable = "cmass",
+         year = 2100,
+         ncore = 4)
+
 ## 1C
 
 final_1C_configuration = function(climate_scenario, disturbance_regime, variable, year) {

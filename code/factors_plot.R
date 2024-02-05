@@ -36,6 +36,7 @@ plot_2 = function(fontsize) {
             legend.direction = "horizontal"))
   
   ggsave("figures/figure_factors.png", width = 7, height = 9.25, dpi = 300)
+  ggsave("figures/figure_factors.pdf", width = 7, height = 9.25, dpi = 300)
 }
 
 plot_2(fontsize = 15)

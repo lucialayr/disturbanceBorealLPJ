@@ -68,7 +68,7 @@ long_names_variables = function(x) {
   x = gsub("co2", "Atmospheric C02 (ppm)", x)
   x = gsub("fpc", "Fractional plant cover in %", x)
   x = gsub("lai", "Leaf area index in m²/m²", x)
-  x = gsub("cmass", "Above ground carbon (kgC/m²)", x)
+  x = gsub("cmass", "Abovegr. carbon (kg/m²)", x)
   
   return(x)
 }

@@ -15,7 +15,7 @@ et_A = function(fontsize) {
                  pch = 15, size = 5) +
       geom_rect(aes(xmin = 2.75, xmax = 5.25, ymin = -Inf, ymax = Inf), fill = "grey80", color = NA, alpha = .4) + 
       geom_line(data = df, aes(x = month, y = aet_mean, color = s, linetype = as.factor(d), group = interaction(s,d, year)), 
-                linewidth = .1, alpha = .9) +
+                linewidth = .05, alpha = .6) +
       geom_line(data = df, aes(x = month, y = aet_mean_30years, color = s, linetype = as.factor(d), group = interaction(s,d)), 
                 linewidth = 1.2, alpha = .9) +
       add_color_scenarios() +
@@ -45,7 +45,7 @@ et_B = function(fontsize) {
     mutate(s = long_names_scenarios(s))
   
   (p = ggplot(data = df, aes(x = as.factor(d), fill = s, group = s)) + 
-      geom_bar(data = df, aes(y = aet_mean_30years),  stat = 'identity', position = position_dodge()) +
+      geom_bar(data = df, aes(y = aet_mean_30years),  stat = 'identity', position = position_dodge(), color = "black", linewidth = 0.05) +
       geom_errorbar(data = df, aes(ymin = aet_mean_30years - aet_sd_30years, 
                                    ymax = aet_mean_30years + aet_sd_30years), 
                     colour="grey20", alpha=0.9, size=0.7, position = position_dodge(.9), width = .4) +
@@ -71,6 +71,21 @@ et_C = function(fontsize, endpoint) {
   df = purrr::reduce(list(df1, df2, df3), bind_rows) %>%
     mutate(et = at___30,
            c = paste0(long_names_scenarios(s), "/", d))
+  df1_s = st_read(paste0("data/final/shp/evapotrans_significance_ssp585_d0.003_met_30years2100.shp")) %>%
+    st_transform(., crs = 3408) 
+  
+  df2_s = st_read(paste0("data/final/shp/evapotrans_significance_picontrol_d0.04_met_30years2100.shp")) %>%
+    st_transform(., crs = 3408) 
+  
+  df3_s = st_read(paste0("data/final/shp/evapotrans_significance_ssp585_d0.04_met_30years2100.shp")) %>%
+    st_transform(., crs = 3408) 
+  
+  df_s = purrr::reduce(list(df1_s, df2_s, df3_s), bind_rows) %>%
+    rename(significance = sgnfcnt) %>%
+    mutate(c = paste0(long_names_scenarios(s), "/", d),
+           centroids = st_centroid(geometry)) %>%
+    select(-geometry) %>%
+    filter(significance == 0) 
   
   df$c = factor(df$c, levels = c("SSP5-RCP8.5/0.003", "Control/0.04", "SSP5-RCP8.5/0.04"))
   
@@ -79,6 +94,7 @@ et_C = function(fontsize, endpoint) {
   (p = ggplot() +
       add_basemap() + 
       geom_sf(data = df, aes(fill = et), color = NA) + 
+      geom_point(data = df_s, aes(geometry = geometry), stat = "sf_coordinates", size = 0.0001, fill = "grey40",  pch = 21, alpha = .5, stroke = 0) +
       add_fill_anomaly(name = "ET (MAM) in mm/month", endpoint = 30) +
       facet_wrap(~c, ncol = 3) + 
       coord_sf(ylim = c(-3200000, 3600000), xlim = c(-4100000, 3900000)) + 
@@ -108,6 +124,7 @@ plot_et = function(fontsize) {
   
   
   ggsave("figures/figure_evapotrans.png", width = 8, height = 8, dpi = 300)
+  ggsave("figures/figure_evapotrans.pdf", width = 8, height = 8, dpi = 300)
 }
 
 plot_et(15)
