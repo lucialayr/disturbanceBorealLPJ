@@ -2,7 +2,7 @@
 
 
 <div style="display: flex; justify-content: space-between;">
-  <div style="flex-basis: 70%;">
+  <div style="flex-basis: 75%;">
     <p>This repository contains code and data needed to reproduce the data analysis and figures of the paper *Disentangeling future effects of climate change and forest disturbance on vegetation composition and land-surface properties of the boreal forest* by Layritz et al., currently submitted to Global Change Biology</p>
   </div>
   <div style="flex-basis: 30%;">
