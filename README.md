@@ -1,21 +1,8 @@
 # Disentangeling future effects of climate change and forest disturbance on vegetation composition and land-surface properties of the boreal forest 
 
+<img align="right" src="figures/github_viz.png">
+
 This repository contains code and data needed to reproduce the data analysis and figures of the paper *Disentangeling future effects of climate change and forest disturbance on vegetation composition and land-surface properties of the boreal forest* by Layritz et al., currently submitted to *Global Change Biology* &#x1F332; &#x1F333;
-
-
-<div style="display: flex;">
-  <div style="flex: 1;">
-    <!-- Text column -->
-    <p>This is some text in the left column.</p>
-    <p>Additional text goes here.</p>
-  </div>
-  <div style="flex: 1;">
-    <!-- Text column -->
-    <p>This is some text in the left column.</p>
-    <p>Additional text goes here.</p>
-  </div>
-</div>
-
 
 
 Per default, this repository will contain only the `final` data used to generate the figures. All other processing steps can be downloaded from [Zenodo](https://zenodo.org/records/10619524). The  scripts that generated the subsets from the raw data can equally be found on [Zenodo](https://zenodo.org/records/10619524). They were run on the High-Performance Computing (HPC) infrastructure and I can't guarantee that they'll run on another machine.
