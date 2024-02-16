@@ -15,7 +15,7 @@ et_A = function(fontsize) {
                  pch = 15, size = 5) +
       geom_rect(aes(xmin = 2.75, xmax = 5.25, ymin = -Inf, ymax = Inf), fill = "grey80", color = NA, alpha = .4) + 
       geom_line(data = df, aes(x = month, y = aet_mean, color = s, linetype = as.factor(d), group = interaction(s,d, year)), 
-                linewidth = .05, alpha = .6) +
+                linewidth = .05, alpha = .5) +
       geom_line(data = df, aes(x = month, y = aet_mean_30years, color = s, linetype = as.factor(d), group = interaction(s,d)), 
                 linewidth = 1.2, alpha = .9) +
       add_color_scenarios() +
@@ -88,6 +88,7 @@ et_C = function(fontsize, endpoint) {
     filter(significance == 0) 
   
   df$c = factor(df$c, levels = c("SSP5-RCP8.5/0.003", "Control/0.04", "SSP5-RCP8.5/0.04"))
+  df_s$c = factor(df_s$c, levels = c("SSP5-RCP8.5/0.003", "Control/0.04", "SSP5-RCP8.5/0.04"))
   
   load_basemap()
  
