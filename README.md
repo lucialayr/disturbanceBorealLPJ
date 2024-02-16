@@ -1,6 +1,6 @@
 # Disentangeling future effects of climate change and forest disturbance on vegetation composition and land-surface properties of the boreal forest 
 
-<img align="right" src="figures/github_viz.png">
+<img align="right" src="figures/github_viz.png" style="width: 90%>
 
 This repository contains code and data needed to reproduce the data analysis and figures of the paper *Disentangeling future effects of climate change and forest disturbance on vegetation composition and land-surface properties of the boreal forest* by Layritz et al., currently submitted to *Global Change Biology* &#x1F332; &#x1F333;
 
