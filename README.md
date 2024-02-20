@@ -2,19 +2,19 @@
 
 <img align="right" src="figures/github_viz.png" style="width: 17%;">
 
-This repository contains code and data needed to reproduce the data analysis and figures of the paper *Disentangeling future effects of climate change and forest disturbance on vegetation composition and land-surface properties of the boreal forest* by Layritz et al., currently submitted to *Global Change Biology*.
+This repository contains code and data needed to reproduce the data analysis and figures of the paper *Disentangeling future effects of climate change and forest disturbance on vegetation composition and land-surface properties of the boreal forest* by Layritz et al., currently under review at *Global Change Biology*.
 
 Per default, this repository will contain only the `final` data used to generate the figures. All other processing steps can be downloaded from [Zenodo](https://zenodo.org/records/10619524). The  scripts that generated the subsets from the raw data can equally be found on [Zenodo](https://zenodo.org/records/10619524). They were run on the High-Performance Computing (HPC) infrastructure and I can't guarantee that they'll run on another machine.
 
 **The data will be available once the paper is accepted for publication.**
 
-## Reproducing analysis
+## Reproducing the analysis
 
-The repository is wrapped in a Docker container to ensure all libraries are installed in the correct version. If you want to reproduce the analysis using Docker, install it first and then run the following
+The repository is wrapped in a Docker container to ensure all libraries are installed in the correct version. If you want to reproduce the analysis using Docker, install it first and then run the following:
 
-1. Generating the Docker image using `sudo docker build --build-arg WHEN=2023-10-09 -t disturbance_boreal_lpj .` This should be done only once
+1. Generating the Docker image using `sudo docker build --build-arg WHEN=2023-10-09 -t disturbance_boreal_lpj .` This should be done only once.
 
-2. Run the Docker container with `sudo docker run disturbance_boreal_lpj`. If everything works fine, this will return you to the terminal
+2. Run the Docker container with `sudo docker run disturbance_boreal_lpj`. If everything works fine, this will return you to the terminal.
 
 3. Execute code: To redraw the figures run `RScript code/run_plots.R`. To recreate final data run `RScript code/create_final_data.R` To recreate processed data run `RScript code/create_processed_data.R`. 
 
