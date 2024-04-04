@@ -7,6 +7,7 @@ library(rnaturalearth)
 
 source("code/utils_visuals.R")
 
+
 albedo_A = function(fontsize) {
   df = read_csv("data/final/final_albedoA.csv", show_col_types = F)  %>%
     mutate(s = long_names_scenarios(s))
@@ -92,16 +93,18 @@ albedo_C = function(fontsize) {
     filter(significance == 0) 
   
   df$c = factor(df$c, levels = c("SSP5-RCP8.5/0.003", "Control/0.04", "SSP5-RCP8.5/0.04")) 
+  df_s$c = factor(df_s$c, levels = c("SSP5-RCP8.5/0.003", "Control/0.04", "SSP5-RCP8.5/0.04"))
   
   load_basemap()
   
   (p = ggplot() +
       add_basemap() + 
       geom_sf(data = df, aes(fill = albedo), color = NA) +
-      geom_point(data = df_s, aes(geometry = geometry), stat = "sf_coordinates", size = 0.0001, fill = "grey40",  pch = 21, alpha = .5, stroke = 0) +
+      geom_point(data = df_s, aes(geometry = geometry), stat = "sf_coordinates", size = 0.0001, fill = "grey90",  pch = 21, alpha = .4, stroke = 0) +
+      scale_x_continuous(expand = c(0,0)) +
+      scale_y_continuous(expand = c(0,0)) +
       add_fill_anomaly(name = "Albedo (DJF)", endpoint = .3) +
       facet_wrap(~c, ncol = 3) + 
-      coord_sf(ylim = c(-3200000, 3600000), xlim = c(-4100000, 3900000)) + 
       add_common_layout(fontsize) +
       theme(axis.text = element_blank(),
             axis.ticks = element_blank(),
@@ -113,24 +116,24 @@ albedo_C = function(fontsize) {
 }
 
 plot_albedo = function(fontsize) {
-  pA = albedo_A(15)
-  pB = albedo_B(15)
+  pA = albedo_A(fontsize)
+  pB = albedo_B(fontsize)
   legend = get_legend(pA)
-  pC = albedo_C(15)
+  pC = albedo_C(fontsize)
   
   
   plot_grid(plot_grid(pA + theme(legend.position = "None"),
                       pB + theme(legend.position = "None"), 
-                      nrow = 1, labels = c("A", "B")),
+                      nrow = 1, labels = c("(a)", "(b)")),
             legend,
             pC,
             ncol = 1, rel_heights = c(1, .2, 1),
-            labels = c("", "", "C"))
+            labels = c("", "", "(c)"))
   
   
   ggsave("figures/figure_albedo.png", width = 8, height = 8, dpi = 300)
   ggsave("figures/figure_albedo.pdf", width = 8, height = 8, dpi = 300)
 }
 
-plot_albedo(15)
+plot_albedo(14)
 

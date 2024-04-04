@@ -50,7 +50,7 @@ et_B = function(fontsize) {
                                    ymax = aet_mean_30years + aet_sd_30years), 
                     colour="grey20", alpha=0.9, size=0.7, position = position_dodge(.9), width = .4) +
       scale_x_discrete(name = "Disturbance probability") +
-      scale_y_continuous(name = "ET (JJA) in mm/month", limits = c(0, 35), expand = c(0,0)) +
+      scale_y_continuous(name = "ET (MAM) in mm/month", limits = c(0, 35), expand = c(0,0)) +
       add_fill_scenarios() +
       add_common_layout(fontsize) +
       theme(panel.grid.major.y = element_line(color = "grey80", size = .2),
@@ -95,13 +95,15 @@ et_C = function(fontsize, endpoint) {
   (p = ggplot() +
       add_basemap() + 
       geom_sf(data = df, aes(fill = et), color = NA) + 
-      geom_point(data = df_s, aes(geometry = geometry), stat = "sf_coordinates", size = 0.0001, fill = "grey40",  pch = 21, alpha = .5, stroke = 0) +
+      geom_point(data = df_s, aes(geometry = geometry), stat = "sf_coordinates", size = 0.0001, fill = "grey90",  pch = 21, alpha = .4, stroke = 0) +
       add_fill_anomaly(name = "ET (MAM) in mm/month", endpoint = 30) +
+      scale_x_continuous(expand = c(0,0)) +
+      scale_y_continuous(expand = c(0,0)) +
       facet_wrap(~c, ncol = 3) + 
-      coord_sf(ylim = c(-3200000, 3600000), xlim = c(-4100000, 3900000)) + 
       add_common_layout(fontsize) +
       theme(axis.text = element_blank(),
             axis.ticks = element_blank(),
+            axis.title = element_blank(),
             legend.position = "bottom",
             legend.direction = "horizontal",
             legend.title = element_text(margin = margin(r = 20))))
@@ -109,26 +111,26 @@ et_C = function(fontsize, endpoint) {
 }
 
 plot_et = function(fontsize) {
-  pA = et_A(15)
-  pB = et_B(15)
+  pA = et_A(fontsize)
+  pB = et_B(fontsize)
   legend = get_legend(pA)
-  pC = et_C(15)
+  pC = et_C(fontsize)
   
   
   plot_grid(plot_grid(pA + theme(legend.position = "None"),
                       pB + theme(legend.position = "None"), 
-                      nrow = 1, labels = c("A", "B")),
+                      nrow = 1, labels = c("(a)", "(b)")),
             legend,
             pC,
             ncol = 1, rel_heights = c(1, .2, 1),
-            labels = c("", "", "C"))
+            labels = c("", "", "(c)"))
   
   
   ggsave("figures/figure_evapotrans.png", width = 8, height = 8, dpi = 300)
   ggsave("figures/figure_evapotrans.pdf", width = 8, height = 8, dpi = 300)
 }
 
-plot_et(15)
+plot_et(14)
 
 
           

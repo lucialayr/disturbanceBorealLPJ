@@ -83,7 +83,7 @@ short_names_variables = function(x) {
 
 long_names_attribution = function(x) {
   x = gsub("albedo", "Albedo \n(DJF)", x)
-  x = gsub("aet", "ET (JJA) in \nmm/month", x)
+  x = gsub("aet", "ET (MAM) in \nmm/month", x)
   x = gsub("total", "Total plant \ncover in %", x)
   x = gsub("bne", "Needleleaf \ncover in %", x)
   x = gsub("tundra", "Tundra \ncover in %", x)
@@ -111,9 +111,12 @@ add_common_layout = function(fontsize) {
 load_basemap = function(epsg = "EPSG:3408") {
   
   shp_coastline <<- ne_coastline(scale = "medium", returnclass = "sf")  %>%
-    st_transform(crs = epsg)
+    st_transform(crs = epsg) %>%
+    st_crop(xmin = -4555364, xmax = 4366954, ymin = -3429227, ymax = 3981392 )
   shp_countries <<- ne_countries(scale = "medium", returnclass = "sf")  %>%
-    st_transform(crs = epsg)
+    st_transform(crs = epsg) %>%
+    st_make_valid() %>%
+    st_crop(xmin = -4555364, xmax = 4366954, ymin = -3429227, ymax = 3981392 )
 }
 
 add_basemap = function() {

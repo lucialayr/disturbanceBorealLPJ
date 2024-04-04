@@ -13,7 +13,7 @@ plot_2 = function(fontsize) {
   
   df$variable = factor(df$variable, levels = c("Total plant \ncover in %", "Needleleaf \ncover in %", 
                                                "Tundra \ncover in %", "Broadleaf \ncover in %",
-                                               "Albedo \n(DJF)", "ET (JJA) in \nmm/month"))
+                                               "Albedo \n(DJF)", "ET (MAM) in \nmm/month"))
   
   df$factor = factor(df$factor, levels = c("D_d", "D_s", "D_x", "D_sd"))
 
@@ -39,4 +39,4 @@ plot_2 = function(fontsize) {
   ggsave("figures/figure_factors.pdf", width = 7, height = 9.25, dpi = 300)
 }
 
-plot_2(fontsize = 15)
+plot_2(fontsize = 14)

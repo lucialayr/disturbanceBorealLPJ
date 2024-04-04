@@ -80,7 +80,8 @@ plot_1C = function(variable, fontsize) {
     add_basemap() +
     geom_sf(data = df, aes(fill = dominant_pft), color = NA) + 
     facet_wrap(~c, nrow = 1) +
-    coord_sf(ylim = c(-3200000, 3600000), xlim = c(-4100000, 3900000)) + 
+      scale_x_continuous(expand = c(0,0)) +
+      scale_y_continuous(expand = c(0,0)) +
     add_pft_scale() +
     add_common_layout(fontsize) +
     theme(axis.text = element_blank(),
@@ -103,17 +104,17 @@ plot_1 = function(variable, fontsize) {
   
   (p1 = plot_grid(plot_grid(p1A + theme(legend.position = "None"),
                             p1B + theme(legend.position = "None"),
-                            ncol = 2, labels = c("A", "B")),
+                            ncol = 2, labels = c("(a)", "(b)")),
                  p1C + theme(legend.position = "None"),
                  legend,
-                 labels = c("", "C", ""),
+                 labels = c("", "(c)", ""),
                  ncol = 1, rel_heights = c(1.2, 1, .15)))
   
   ggsave(paste0("figures/figure_vegetation_", variable, ".png"), width = 9, height = 7, dpi = 300)
   ggsave(paste0("figures/figure_vegetation_", variable, ".pdf"), width = 9, height = 7, dpi = 300)
 }
 
-plot_1("fpc", 15)
+plot_1("fpc", 14)
 
 
 
