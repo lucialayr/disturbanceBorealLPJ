@@ -74,6 +74,18 @@ attribution_processed_final(variable_list = data.frame(variable = c("albedo", "f
                             disturbance_regime = "0.04",
                             ncore = 4)
 
+attribution_processed_final(variable_list = data.frame(variable = c("albedo", "fpc", "fpc", "fpc", "fpc", "met"),
+                                                       column_of_interest = c("albedo", "total", "bne", "tundra", "bl", "aet"),
+                                                       months = c("DJF", 0, 0, 0, 0, "MAM")),
+                            climate_scenario = "ssp126",
+                            disturbance_regime = "0.1",
+                            ncore = 4)
 
+attribution_processed_final(variable_list = data.frame(variable = c("albedo", "fpc", "fpc", "fpc", "fpc", "met"),
+                                                       column_of_interest = c("albedo", "total", "bne", "tundra", "bl", "aet"),
+                                                       months = c("DJF", 0, 0, 0, 0, "MAM")),
+                            climate_scenario = "ssp126",
+                            disturbance_regime = "0.01",
+                            ncore = 4)
 
 

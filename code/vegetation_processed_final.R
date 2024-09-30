@@ -145,3 +145,21 @@ final_1C(Configurations = data.frame(climate_scenario = c("picontrol",  "ssp585"
          variable = "fpc",
          year = 2100,
          ncore = 4)
+
+final_1C_appendix = function(Configurations, variable, year, ncore) {
+  
+  plan(multisession, workers = ncore)
+  
+  results = future_pmap_dfr(Configurations, ~final_1C_configuration(..1, ..2, variable, year))
+  
+  results %>%
+    write_csv(paste0("data/final/final_vegetationC_", variable, "_appendix.csv"))
+}
+
+
+final_1C_appendix(Configurations = data.frame(climate_scenario = rep(c("picontrol",  "ssp126" , "ssp370",  "ssp585"), 4),
+                                     disturbance_regime = c(rep("0.003333333", 4), rep("0.04", 4), 
+                                                            rep("0.01", 4), rep("0.1", 4))),
+         variable = "fpc",
+         year = 2100,
+         ncore = 4)

@@ -25,7 +25,7 @@ long_names_pfts = function(x) {
   x = gsub("bne", "Needleleaf evergreen", x)
   x = gsub("bns", "Needleleaf summergreen", x)
   x = gsub("tene", "Temperate needleleaf", x)
-  x = gsub("tundra", "Tundra", x)
+  x = gsub("tundra", "Non-tree V.", x)
   x = gsub("soil", "Bare soil", x)
   return(x)
 }
@@ -36,7 +36,7 @@ long_names_pfts_twolines = function(x) {
   x = gsub("bne", "Needleleaf\nevergreen", x)
   x = gsub("bns", "Needleleaf\nsummergreen", x)
   x = gsub("tene", "Temperate\nneedleleaf", x)
-  x = gsub("tundra", "Tundra", x)
+  x = gsub("tundra", "Non-tree V.", x)
   x = gsub("soil", "Bare soil", x)
   return(x)
 }
@@ -86,7 +86,7 @@ long_names_attribution = function(x) {
   x = gsub("aet", "ET (MAM) in \nmm/month", x)
   x = gsub("total", "Total plant \ncover in %", x)
   x = gsub("bne", "Needleleaf \ncover in %", x)
-  x = gsub("tundra", "Tundra \ncover in %", x)
+  x = gsub("tundra", "Non-tree \ncover in %", x)
   x = gsub("bl", "Broadleaf \ncover in %", x)
   return(x)
 }  
@@ -103,7 +103,7 @@ add_common_layout = function(fontsize) {
           panel.background = element_rect(fill = "transparent", colour = NA),  
           plot.background = element_rect(fill = "transparent", colour = NA),
           strip.background = element_rect(fill = "transparent", color = NA),
-          plot.margin = margin(0, 0, 0, 0, "cm")) #zero margins to make paneling sub panels more contolled
+          plot.margin = margin(0.1, 0.1, 0.1, 0.1, "cm")) #zero margins to make paneling sub panels more contolled
 }
 
 ##geospatial
@@ -120,7 +120,7 @@ load_basemap = function(epsg = "EPSG:3408") {
 }
 
 add_basemap = function() {
-  list(geom_sf(data=shp_countries, fill = "grey80", color="grey80", linewidth = .0),
+  list(geom_sf(data=shp_countries, fill = "grey90", color="grey90", linewidth = .0),
        geom_sf(data=shp_coastline, colour = "grey40", linewidth = .15))
 }
 
@@ -148,7 +148,7 @@ add_fill_scenarios = function() {
 # color scale attribution
 
 add_scale_factors = function() {
-  scale_color_manual(values = c("D_sd" = "grey20", "D_d" = "#95A494", "D_s" = "#4483A6",  "D_x" = "#DFB793"),
+  scale_color_manual(values = c("D_sd" = "grey20", "D_d" = "#95A494", "D_s" = "#4483A6",  "D_x" = "#f3e4d3ff"),
                      labels = c("D_sd" = expression(Total~effect~Delta[~~SD]), "D_d" = expression(Disturbance~Delta[~~D]), "D_s" = expression(Climate~Delta[~~S]),  "D_x" = expression(Interaction~Delta[~~X])),
                      name = "Driver") 
 }
@@ -157,13 +157,13 @@ add_scale_factors = function() {
 
 add_pft_scale = function(){
   scale_fill_manual(values = c("Temperate broadleaf" = "#D55E00", "Pioneering broadleaf" = "#E69F00",  "Needleleaf evergreen"  = "#0072B2",   
-                    "Needleleaf summergreen" = "#56B4E9",  "Tundra" = "#009E73", "Bare soil" = "mistyrose3"),
+                    "Needleleaf summergreen" = "#56B4E9",  "Non-tree V." = "#009E73", "Bare soil" = "mistyrose3"),
                     name = "Vegetation type")
 }
 
 add_pft_scale_twolines = function(){
   scale_fill_manual(values = c("Temperate\nbroadleaf" = "#D55E00", "Pioneering\nbroadleaf" = "#E69F00",  "Needleleaf\nevergreen"  = "#0072B2",   
-                               "Needleleaf\nsummergreen" = "#56B4E9",  "Tundra" = "#009E73", "Bare soil" = "mistyrose3"),
+                               "Needleleaf\nsummergreen" = "#56B4E9",  "Non-tree V." = "#009E73", "Bare soil" = "mistyrose3"),
                     name = "Vegetation type")
 }
 

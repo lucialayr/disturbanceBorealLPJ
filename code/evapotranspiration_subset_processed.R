@@ -24,8 +24,12 @@ evapotranspiration_timeslice_subset_processed_single = function(climate_scenario
     pivot_longer(cols = c("jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"), 
                  names_to = "month", values_to = "interception")
   
+  runoff = read_timeslice(climate_scenario, disturbance_regime, "mrunoff", year) %>%
+    pivot_longer(cols = c("jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"), 
+                 names_to = "month", values_to = "runoff")
   
-  components = list(transpiration, soil_evaporation, interception)
+  
+  components = list(transpiration, soil_evaporation, interception, runoff)
   
   df = purrr::reduce(components, full_join) %>%
     mutate(aet = transpiration + soil_evaporation + interception) 

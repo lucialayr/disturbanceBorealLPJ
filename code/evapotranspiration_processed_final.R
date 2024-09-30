@@ -57,6 +57,48 @@ final_4A(Climate_Scenarios = c("ssp585" , "ssp126" , "picontrol"),
          year = 2100,
          ncore = 4)
 
+final_4A_configuration_appendix = function(climate_scenario, disturbance_regime, year) {
+  
+  disturbance_regime = as.character(disturbance_regime) #arrives as a factor which gives use trouble
+  
+  df_individual_years = read_csv(paste0("data/processed/", create_name_timeslice(climate_scenario, round(as.numeric(disturbance_regime), 3), "met", year), "_processed.csv"),
+                                 show_col_types = FALSE) %>%
+    group_by(year, month) %>%
+    summarize(across(c(transpiration, soil_evaporation, interception, runoff), list(mean = ~round(mean(.x, na.rm = TRUE), digits = 4)),
+                     .names = "{.col}_{.fn}")) %>%
+    ungroup() 
+  
+  
+  
+  df = df_individual_years %>%
+    mutate(s = climate_scenario,
+           d = round(as.numeric(disturbance_regime), 3))
+  
+  rm(df_individual_years)
+  gc()
+  
+  return(df)
+}
+
+final_4A_appendix = function(Climate_Scenarios, Disturbance_Regimes, year, ncore) {
+  combinations = expand.grid(climate_scenario = Climate_Scenarios, disturbance_regime = Disturbance_Regimes)
+  
+  plan(multisession, workers = ncore)
+  
+  results = future_pmap_dfr(combinations, ~final_4A_configuration_appendix(..1, ..2, year))
+  
+  results %>%
+    write_csv(paste0("data/final/final_evapotrans_appendix.csv"))
+  
+  rm(results)
+  gc()
+}
+
+final_4A_appendix(Climate_Scenarios = c("ssp585" , "ssp126" , "picontrol"),
+         Disturbance_Regimes = c("0.04", "0.003"),
+         year = 2100,
+         ncore = 4)
+
 ## 4B
 
 final_4B_configuration = function(climate_scenario, disturbance_regime, year, season) {
