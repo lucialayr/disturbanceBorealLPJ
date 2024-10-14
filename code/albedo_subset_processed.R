@@ -111,7 +111,7 @@ albedo_timeseries_subset_process_configuration = function(climate_scenario, dist
 }
 
 albedo_timeseries_subset_process_configuration("ssp585", "0.04", ncore = 4)
-
+albedo_timeseries_subset_process_configuration("ssp126", "0.1", ncore = 4)
 
 
 

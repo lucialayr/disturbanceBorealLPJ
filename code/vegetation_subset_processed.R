@@ -84,5 +84,9 @@ vegetation_timeseries_subset_process_configuration(climate_scenario = "ssp585",
                                                    variable = c("lai", "fpc",  "cmass"),
                                                    ncore = 4)
 
+vegetation_timeseries_subset_process_configuration(climate_scenario = "ssp126",
+                                                   disturbance_regime = "0.1",
+                                                   variable = c("lai", "fpc",  "cmass"),
+                                                   ncore = 4)
 
 

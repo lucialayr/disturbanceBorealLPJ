@@ -64,28 +64,22 @@ attribution_processed_final = function(variable_list, climate_scenario, disturba
   results = future_pmap_dfr(variable_list, ~calculate_effect_variable(climate_scenario, disturbance_regime,
                                                                                   ..1, ..2, ..3))
   
-  write_csv(results, "data/final/final_factors.csv")
+  write_csv(results, paste0("data/final/final_factors_", climate_scenario, "_", disturbance_regime, ".csv"))
 }
 
 attribution_processed_final(variable_list = data.frame(variable = c("albedo", "fpc", "fpc", "fpc", "fpc", "met"),
                                                        column_of_interest = c("albedo", "total", "bne", "tundra", "bl", "aet"),
-                                                       months = c("DJF", 0, 0, 0, 0, "MAM")),
+                                                       months = c("DJF", 0, 0, 0, 0, "JJA")),
                             climate_scenario = "ssp585",
                             disturbance_regime = "0.04",
                             ncore = 4)
 
 attribution_processed_final(variable_list = data.frame(variable = c("albedo", "fpc", "fpc", "fpc", "fpc", "met"),
                                                        column_of_interest = c("albedo", "total", "bne", "tundra", "bl", "aet"),
-                                                       months = c("DJF", 0, 0, 0, 0, "MAM")),
+                                                       months = c("DJF", 0, 0, 0, 0, "JJA")),
                             climate_scenario = "ssp126",
                             disturbance_regime = "0.1",
                             ncore = 4)
 
-attribution_processed_final(variable_list = data.frame(variable = c("albedo", "fpc", "fpc", "fpc", "fpc", "met"),
-                                                       column_of_interest = c("albedo", "total", "bne", "tundra", "bl", "aet"),
-                                                       months = c("DJF", 0, 0, 0, 0, "MAM")),
-                            climate_scenario = "ssp126",
-                            disturbance_regime = "0.01",
-                            ncore = 4)
 
 

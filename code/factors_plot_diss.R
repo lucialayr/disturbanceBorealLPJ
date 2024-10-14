@@ -28,15 +28,29 @@ variable = "fpc"
 column_of_interest = "total"
 
 
-plot_2 = function() {
-  df = read.csv(paste0("data/final/final_factors.csv")) %>%
+plot_2 = function(climate_scenario, disturbance_regime) {
+  df = read.csv(paste0("data/final/final_factors_", climate_scenario, "_", disturbance_regime, ".csv")) %>%
     mutate(variable = long_names_attribution(variable))
   
-  df$variable = factor(df$variable, levels = c("Total plant \ncover in %", "Needleleaf \ncover in %",  "Albedo \n(DJF)", 
-                                               "Non-tree \ncover in %", "ET (MAM) in \nmm/month" ,  "Broadleaf \ncover in %"
-                                               ))
-  
   df$factor = factor(df$factor, levels = c("D_d", "D_s", "D_x", "D_sd"))
+  
+  panel_labels = data.frame(
+    variable = c("Total plant \ncover", "Needleleaf \ncover",  "Albedo \n(DJF)", 
+                 "Non-tree \ncover", "ET (JJA) in \nmm/month" ,  "Broadleaf \ncover"),
+    label = c("(a)", "(b)", "(c)", "(d)", "(e)", "(f)"),  # Adjust these as per the number of facets
+    x = 1850,   # Position to place the label on the x-axis
+    y = Inf     # Position to place the label on the y-axis (Inf means the top of the panel)
+  )
+  
+  df$variable = factor(df$variable, levels = c("Total plant \ncover", "Needleleaf \ncover",  "Albedo \n(DJF)", 
+                                               "Non-tree \ncover", "ET (JJA) in \nmm/month" ,  "Broadleaf \ncover"
+  ))
+  
+  panel_labels$variable = factor(panel_labels$variable, levels = c("Total plant \ncover", "Needleleaf \ncover",  "Albedo \n(DJF)", 
+                                                                   "Non-tree \ncover", "ET (JJA) in \nmm/month" ,  "Broadleaf \ncover"
+  ))
+  
+  
 
   (p = ggplot() + 
       geom_rect(data = df, aes(xmin=2015, xmax=2100, ymin=-Inf, ymax=Inf), fill="grey90") + 
@@ -51,13 +65,16 @@ plot_2 = function() {
       geom_point(data = df[df$type == "none", ], aes(x = year, y = effect, color = factor), pch = 15, size = 5) + # trick to get reasonable size legend keys
       scale_size_manual(values = c("effect_global" = .4, "effect_smoothed" = .8), guide = "none") +
       scale_alpha_manual(values = c("effect_global" = 1, "effect_smoothed" = 1), guide = "none") +
+      geom_text(data = panel_labels, aes(x = x, y = y, label = label), 
+                hjust = 0, vjust = 1.5, size = 5, fontface = "bold", inherit.aes = FALSE) +
       theme(strip.placement = "outside",
             legend.margin = margin(0, 0, 0, -2.5, "cm"),
             legend.text.align = 0,
             legend.position = "bottom",
             legend.direction = "horizontal"))
   
-  ggsave("figures/figure_factors_diss.pdf", width = 8, height = 6, scale = 1.25)
+  ggsave(paste0("figures/figure_factors_diss_", climate_scenario, "_", disturbance_regime, ".pdf"), width = 8, height = 6, scale = 1.25)
 } 
 
-plot_2()
+plot_2("ssp585", "0.04")
+plot_2("ssp126", "0.1")

@@ -83,11 +83,11 @@ short_names_variables = function(x) {
 
 long_names_attribution = function(x) {
   x = gsub("albedo", "Albedo \n(DJF)", x)
-  x = gsub("aet", "ET (MAM) in \nmm/month", x)
-  x = gsub("total", "Total plant \ncover in %", x)
-  x = gsub("bne", "Needleleaf \ncover in %", x)
-  x = gsub("tundra", "Non-tree \ncover in %", x)
-  x = gsub("bl", "Broadleaf \ncover in %", x)
+  x = gsub("aet", "ET (JJA) in \nmm/month", x)
+  x = gsub("total", "Total plant \ncover", x)
+  x = gsub("bne", "Needleleaf \ncover", x)
+  x = gsub("tundra", "Non-tree \ncover", x)
+  x = gsub("bl", "Broadleaf \ncover", x)
   return(x)
 }  
 
