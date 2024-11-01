@@ -30,24 +30,26 @@ column_of_interest = "total"
 
 plot_2 = function(climate_scenario, disturbance_regime) {
   df = read.csv(paste0("data/final/final_factors_", climate_scenario, "_", disturbance_regime, ".csv")) %>%
+    mutate(effect = case_when(variable %in% c('tundra', 'bl', 'bne', 'total') ~ effect * 100,
+                              T ~ effect)) %>%
     mutate(variable = long_names_attribution(variable))
   
   df$factor = factor(df$factor, levels = c("D_d", "D_s", "D_x", "D_sd"))
   
   panel_labels = data.frame(
-    variable = c("Total plant \ncover", "Needleleaf \ncover",  "Albedo \n(DJF)", 
-                 "Non-tree \ncover", "ET (JJA) in \nmm/month" ,  "Broadleaf \ncover"),
+    variable = c("Total plant \ncover in %", "Needleleaf \ncover in %",  "Albedo \n(DJF)", 
+                 "Non-tree \ncover in %", "ET (JJA) in \nmm/month" ,  "Broadleaf \ncover in %"),
     label = c("(a)", "(b)", "(c)", "(d)", "(e)", "(f)"),  # Adjust these as per the number of facets
     x = 1850,   # Position to place the label on the x-axis
     y = Inf     # Position to place the label on the y-axis (Inf means the top of the panel)
   )
   
-  df$variable = factor(df$variable, levels = c("Total plant \ncover", "Needleleaf \ncover",  "Albedo \n(DJF)", 
-                                               "Non-tree \ncover", "ET (JJA) in \nmm/month" ,  "Broadleaf \ncover"
+  df$variable = factor(df$variable, levels = c("Total plant \ncover in %", "Needleleaf \ncover in %",  "Albedo \n(DJF)", 
+                                               "Non-tree \ncover in %", "ET (JJA) in \nmm/month" ,  "Broadleaf \ncover in %"
   ))
   
-  panel_labels$variable = factor(panel_labels$variable, levels = c("Total plant \ncover", "Needleleaf \ncover",  "Albedo \n(DJF)", 
-                                                                   "Non-tree \ncover", "ET (JJA) in \nmm/month" ,  "Broadleaf \ncover"
+  panel_labels$variable = factor(panel_labels$variable, levels = c("Total plant \ncover in %", "Needleleaf \ncover in %",  "Albedo \n(DJF)", 
+                                                                   "Non-tree \ncover in %", "ET (JJA) in \nmm/month" ,  "Broadleaf \ncover in %"
   ))
   
   
@@ -78,3 +80,4 @@ plot_2 = function(climate_scenario, disturbance_regime) {
 
 plot_2("ssp585", "0.04")
 plot_2("ssp126", "0.1")
+plot_2("ssp585", "0.1")

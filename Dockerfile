@@ -1,6 +1,19 @@
 # Use an R base image with a specific R version
 FROM rocker/r-ver:4.2.2
 
+
+# Install system dependencies for required R packages
+RUN apt-get update && apt-get install -y \
+    libgdal-dev \
+    libproj-dev \
+    libgeos-dev \
+    libudunits2-dev \
+    libnetcdf-dev \
+    libcurl4-openssl-dev \
+    libxml2-dev \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
+
 # Copy the Dockerfile and set the working directory
 COPY . /app
 WORKDIR /app

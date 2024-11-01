@@ -23,7 +23,8 @@ The data analysis is per default parallelized on four cores.
 ### to-do
 
 - [ ]  customize to enable sequential processing
-
+- [ ]  add new version of Zenodo repo that contains additional timeseries data (is in pcloud)
+- [ ]. test Docker on multiple systems (worked on my work Ubuntu computer but not on my private Mac so far)
 
 ## Folder structure
 

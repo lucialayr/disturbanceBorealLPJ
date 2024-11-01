@@ -114,4 +114,6 @@ evapotranspiration_timeseries_subset_process_configuration = function(climate_sc
 }
 
 evapotranspiration_timeseries_subset_process_configuration("ssp585", "0.04", ncore = 4)
+evapotranspiration_timeseries_subset_process_configuration("ssp585", "0.1", ncore = 4)
 evapotranspiration_timeseries_subset_process_configuration("ssp126", "0.1", ncore = 4)
+

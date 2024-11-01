@@ -63,6 +63,12 @@ plot_1B = function(variable, fontsize) {
   df$pft = factor(df$pft, levels = c("Pioneering broadleaf", "Temperate broadleaf", 
                                      "Needleleaf evergreen", "Needleleaf summergreen", "Non-tree V.", "Bare soil"))
   
+  if (variable == 'fpc') {
+    df = df %>%
+      mutate(mean = mean*100,
+             total_mean = total_mean*100)
+  }
+  
   (p = ggplot() + 
       geom_bar(data = df, aes(x = d, fill = pft, y = mean), stat = 'identity', position = 'stack', color = "black", linewidth = .15) +
       geom_errorbar(data = df, aes(x = d, ymin = total_mean  - total_sd, ymax = total_mean + total_sd), width=0.4, colour="grey20", alpha=0.9, linewidth = .5) +
@@ -107,7 +113,7 @@ return(p)
 
 plot_1 = function(variable, fontsize) {
   
-  p1A = plot_1B(variable)
+  (p1A = plot_1B(variable))
   (p1B = plot_1B("cmass"))
   p1C = plot_1C(variable)
   legend = get_legend(p1B + theme(legend.direction = "horizontal",

@@ -78,11 +78,6 @@ final_1B = function(Climate_Scenarios, Disturbance_Regimes, variable, year, ncor
     write_csv(paste0("data/final/final_vegetationB_", variable, ".csv"))
 }
 
-final_1B(Climate_Scenarios = c("ssp370" , "ssp585" , "ssp126" , "picontrol"),
-         Disturbance_Regimes = c("0.04", "0.003333333", "0.1", "0.01"),
-         variable = "lai",
-         year = 2100,
-         ncore = 4)
 
 final_1B(Climate_Scenarios = c("ssp370" , "ssp585" , "ssp126" , "picontrol"),
          Disturbance_Regimes = c("0.04", "0.003333333", "0.1", "0.01"),

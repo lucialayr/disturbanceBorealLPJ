@@ -1,4 +1,4 @@
-setwd("~/02_Science/disturbanceBorealLPJ_github") 
+setwd("~/Desktop/PhD/disturbanceBorealLPJ") 
 
 source("code/vegetation_processed_final.R")
 source("code/factors_processed_final.R")

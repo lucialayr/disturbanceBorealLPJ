@@ -43,6 +43,12 @@ vegetation_timeslice_subset_process_all(Climate_Scenarios = c("ssp370" , "ssp585
                                         year = 2100,
                                         ncore = 4)
 
+vegetation_timeslice_subset_process_all(Climate_Scenarios = c("ssp370" , "ssp585" , "ssp126" , "picontrol"),
+                                        Disturbance_Regimes = c("0.04", "0.003333333", "0.1", "0.01"),
+                                        Variables = c("cmass"),
+                                        year = 2100,
+                                        ncore = 4)
+
 ## time series
 vegetation_timeseries_subset_processed_single = function(climate_scenario, disturbance_regime, variable) {
   
@@ -84,9 +90,16 @@ vegetation_timeseries_subset_process_configuration(climate_scenario = "ssp585",
                                                    variable = c("lai", "fpc",  "cmass"),
                                                    ncore = 4)
 
+vegetation_timeseries_subset_process_configuration(climate_scenario = "ssp585",
+                                                   disturbance_regime = "0.1",
+                                                   variable = c("lai", "fpc",  "cmass"),
+                                                   ncore = 4)
+
 vegetation_timeseries_subset_process_configuration(climate_scenario = "ssp126",
                                                    disturbance_regime = "0.1",
                                                    variable = c("lai", "fpc",  "cmass"),
                                                    ncore = 4)
+
+
 
 
