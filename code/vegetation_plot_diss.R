@@ -129,6 +129,7 @@ plot_1 = function(variable, fontsize) {
                  labels = c("", "(c)", ""),
                  ncol = 1, rel_heights = c(1.2, 1, .15)))
   ggsave(paste0("figures/figure_vegetation_", variable, "_diss.pdf"), width = 9, height = 7, scale = 1.1)
+  ggsave(paste0("figures/figure_vegetation_", variable, "_diss.png"), width = 9, height = 7, scale = 1.1)
 }
 
 plot_1("fpc", 14)
@@ -173,3 +174,4 @@ plot_1C_appendix = function(variable, fontsize) {
 plot_1C_appendix("fpc", 15)
 
 ggsave("figures/figure_vegetation_fpc_diss_appendix.pdf", width = 9, height = 9, scale = 1.1)
+ggsave("figures/figure_vegetation_fpc_diss_appendix.png", width = 9, height = 9, scale = 1.1)

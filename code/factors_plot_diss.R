@@ -1,5 +1,6 @@
 library(tidyverse)
 library(cowplot)
+library(ggh4x)
 
 source("code/utils_visuals.R")
 
@@ -29,10 +30,18 @@ column_of_interest = "total"
 
 
 plot_2 = function(climate_scenario, disturbance_regime) {
+  
+  df_limits = data.frame(year = rep(2015, 12),
+                         variable = rep(c("Total plant \ncover in %", "Needleleaf \ncover in %",  "Albedo \n(DJF)", 
+                                          "Non-tree \ncover in %", "ET (JJA) in \nmm/month" ,  "Broadleaf \ncover in %"), each = 2),
+                         effect = c(32, -12.4, 20,   -31, 0.1, -0.12, 
+                                    44, -13.3, 11.3, -26, 50, -3))
+  
   df = read.csv(paste0("data/final/final_factors_", climate_scenario, "_", disturbance_regime, ".csv")) %>%
     mutate(effect = case_when(variable %in% c('tundra', 'bl', 'bne', 'total') ~ effect * 100,
                               T ~ effect)) %>%
     mutate(variable = long_names_attribution(variable))
+  
   
   df$factor = factor(df$factor, levels = c("D_d", "D_s", "D_x", "D_sd"))
   
@@ -52,13 +61,17 @@ plot_2 = function(climate_scenario, disturbance_regime) {
                                                                    "Non-tree \ncover in %", "ET (JJA) in \nmm/month" ,  "Broadleaf \ncover in %"
   ))
   
+  df_limits$variable = factor(df_limits$variable, levels = c("Total plant \ncover in %", "Needleleaf \ncover in %",  "Albedo \n(DJF)", 
+                                                                   "Non-tree \ncover in %", "ET (JJA) in \nmm/month" ,  "Broadleaf \ncover in %"
+  ))
   
-
-  (p = ggplot() + 
+  
+ (p = ggplot() + 
       geom_rect(data = df, aes(xmin=2015, xmax=2100, ymin=-Inf, ymax=Inf), fill="grey90") + 
       geom_hline(yintercept = 0, color = "grey") +
+      geom_point(data = df_limits, aes(x = year, y = effect), alpha = 0) +
       geom_line(data = df, aes(x = year, y = effect, color = factor, size = type, alpha = type)) +
-      facet_wrap(~variable, scales = "free", ncol = 2, strip.position="left") +
+      facet_wrap(~variable, scales = "free", ncol = 2, strip.position = "left") +
       scale_x_continuous(name = "Year", breaks = c(2015, 2100, 2300, 2500), expand = c(0,0)) +
       scale_y_continuous(name = NULL, expand = c(0,0)) +
       scale_color_manual(values = c("D_sd" = "grey20", "D_d" = "#8ead8a", "D_s" = "#4483A6",  "D_x" = "#e9c9aa"),
@@ -75,7 +88,10 @@ plot_2 = function(climate_scenario, disturbance_regime) {
             legend.position = "bottom",
             legend.direction = "horizontal"))
   
+  print(p)
+  
   ggsave(paste0("figures/figure_factors_diss_", climate_scenario, "_", disturbance_regime, ".pdf"), width = 8, height = 6, scale = 1.25)
+  ggsave(paste0("figures/figure_factors_diss_", climate_scenario, "_", disturbance_regime, ".png"), width = 8, height = 6, scale = 1.25, dpi = 300)
 } 
 
 plot_2("ssp585", "0.04")

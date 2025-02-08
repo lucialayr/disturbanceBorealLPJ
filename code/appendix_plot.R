@@ -97,3 +97,4 @@ df_snow$month = factor(df_snow$month, c("jan", "feb", "mar", "apr", "may", "jun"
 
 plot_grid(p1, p2, nrow = 1, labels = c("(a)", "(b)"))
 ggsave("figures/figure_snow_precipitation_diss.pdf", height = 4, width = 10, scale = 1)
+ggsave("figures/figure_snow_precipitation_diss.png", height = 4, width = 10, scale = 1)
