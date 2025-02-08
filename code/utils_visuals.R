@@ -157,13 +157,13 @@ add_scale_factors = function() {
 
 add_pft_scale = function(){
   scale_fill_manual(values = c("Temperate broadleaf" = "#D55E00", "Pioneering broadleaf" = "#E69F00",  "Needleleaf evergreen"  = "#0072B2",   
-                    "Needleleaf summergreen" = "#56B4E9",  "Non-tree V." = "#009E73", "Bare soil" = "mistyrose3"),
+                    "Needleleaf summergreen" = "#56B4E9",  "Non-tree V." = "#009E73", "Bare soil" = "#b89ab3"),
                     name = "Vegetation type")
 }
 
 add_pft_scale_twolines = function(){
   scale_fill_manual(values = c("Temperate\nbroadleaf" = "#D55E00", "Pioneering\nbroadleaf" = "#E69F00",  "Needleleaf\nevergreen"  = "#0072B2",   
-                               "Needleleaf\nsummergreen" = "#56B4E9",  "Non-tree V." = "#009E73", "Bare soil" = "mistyrose3"),
+                               "Needleleaf\nsummergreen" = "#56B4E9",  "Non-tree V." = "#009E73", "Bare soil" = "#b89ab3"),
                     name = "Vegetation type")
 }
 
